@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../users/users-model.js")
+const bcrypt = require("bcryptjs")
 
 const checkPayload = (req,res,next)=>{
     if(!req.body.username || !req.body.password){
@@ -19,7 +20,6 @@ const checkUserInDB = async (req,res,next)=>{
         else{
             res.status(401).json("Username already exists")
         }
-
     }catch(e){
         res.status(500).json(`Server error: ${e}`)
     }
