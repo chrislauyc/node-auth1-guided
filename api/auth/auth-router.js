@@ -58,7 +58,8 @@ router.post("/login",checkPayload,checkUserExists, (req,res)=>{
     try{
         const verified = bcrypt.compareSync(req.body.password,req.userData.password)
         if(verified){
-            console.log("Session here")
+            req.session.user = req.userData
+            res.json(`Welcome back ${req.userData.username}`)
         }
         else{
             res.status(401).json("Username or password incorrect")
