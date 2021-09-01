@@ -58,7 +58,7 @@ router.post("/login",checkPayload,checkUserExists, (req,res)=>{
             console.log("Session here")
         }
         else{
-
+            res.status(401).json("Username or password incorrect")
         }
     }catch(e){
         res.status(500).json({message:e.message})
