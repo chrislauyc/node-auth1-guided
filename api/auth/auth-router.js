@@ -12,8 +12,14 @@ const checkPayload = (req,res,next)=>{
 }
 const checkUserInDB = async (req,res,next)=>{
     try{
-        const user = await User.findBy({username:req.body.username})
-        
+        const rows = await User.findBy({username:req.body.username})
+        if(!rows.length){
+            next()
+        }
+        else{
+            res.status(401).json("Username already exists")
+        }
+
     }catch(e){
         res.status(500).json(`Server error: ${e}`)
     }
