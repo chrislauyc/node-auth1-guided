@@ -29,6 +29,8 @@ const checkUserInDB = async (req,res,next)=>{
 router.post("/register",checkPayload,checkUserInDB, (req,res)=>{
     try{
         const hash = bcrypt.hashSync(req.body.password,10) //2 to the 10th power
+        const newUser = await User.add({username:req.body.username, password:hash})
+        res.status(201).json(newUser)
     }catch(e){
         res.status(500).json({message:e.message})
     }
