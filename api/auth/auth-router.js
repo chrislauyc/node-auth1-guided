@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const userModel = require("../users/users-model");
 const bcryptjs = require("bcryptjs"); //bcript do the salting
-const sessions = require
 const checkPayloadShape=(req,res,next)=>{
     if(!req.body.username || !req.body.password){
         res.status(401).json({message:"username and password required"});
@@ -64,7 +63,7 @@ router.post("/register",checkPayloadShape,userMustNotExist,async(req,res,next)=>
 router.post("/login",checkPayloadShape,userMustExist,(req,res,next)=>{
     try{
         if(bcryptjs.compareSync(req.body.password, req.user.password)){
-            req.session.user = req.userData;
+            req.session.user = req.user;
             res.status(200).json({message:"login successful"});
         }
         else{
@@ -76,8 +75,19 @@ router.post("/login",checkPayloadShape,userMustExist,(req,res,next)=>{
     }
 });
 router.get("/logout",(req,res,next)=>{
-    console.log("logging out");
-    next();
+    if(req.session){
+        req.session.destroy(err=>{
+            if(err){
+                res.json("cant log out");
+            }
+            else{
+                res.json("you are logged out");
+            }
+        })
+    }
+    else{
+        res.json("no session found");
+    }
 });
 
 
