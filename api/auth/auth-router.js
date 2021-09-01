@@ -25,6 +25,20 @@ const checkUserInDB = async (req,res,next)=>{
     }
 }
 
+const checkUserExists = async (req,res,next)=>{
+    try{
+        const rows = await User.findBy({username:req.body.username})
+        if(!rows.length){
+            next()
+        }
+        else{
+            res.status(401).json("Username already exists")
+        }
+    }catch(e){
+        res.status(500).json(`Server error: ${e}`)
+    }
+}
+
 
 router.post("/register",checkPayload,checkUserInDB, async (req,res)=>{
     try{
