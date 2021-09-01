@@ -36,7 +36,7 @@ router.post("/register",checkPayload,checkUserInDB, async (req,res)=>{
     }
 })
 
-router.post("/login", (req,res)=>{
+router.post("/login",checkPayload,checkUserExists, (req,res)=>{
     console.log("login")
 })
 
