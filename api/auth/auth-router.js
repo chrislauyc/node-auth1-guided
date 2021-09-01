@@ -1,7 +1,11 @@
 const express = require("express")
 const router = express.Router()
 
-router.post("/register", (req,res)=>{
+const checkPayload = (req,res,next)=>{
+    
+}
+
+router.post("/register",checkPayload, (req,res)=>{
     console.log("registering")
 })
 
