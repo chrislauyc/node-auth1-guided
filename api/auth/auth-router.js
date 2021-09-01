@@ -28,6 +28,9 @@ const checkUserInDB = async (req,res,next)=>{
 const checkUserExists = async (req,res,next)=>{
     try{
         const rows = await User.findBy({username:req.body.username})
+        // an array [{username:"fred", password:"$2a$10alsjkf;laksjdf;lkj"}] 
+
+
         if(rows.length){
             req.userData = rows[0]
             next()
