@@ -54,6 +54,12 @@ router.post("/register",checkPayload,checkUserInDB, async (req,res)=>{
 router.post("/login",checkPayload,checkUserExists, (req,res)=>{
     try{
         const verified = bcrypt.compareSync(req.body.password,req.userData.password)
+        if(verified){
+            console.log("Session here")
+        }
+        else{
+
+        }
     }catch(e){
         res.status(500).json({message:e.message})
     }
