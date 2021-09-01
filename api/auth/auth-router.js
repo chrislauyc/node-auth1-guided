@@ -33,7 +33,7 @@ const checkUserExists = async (req,res,next)=>{
             next()
         }
         else{
-            res.status(401).json("Username already exists")
+            res.status(401).json("Username does not exist")
         }
     }catch(e){
         res.status(500).json(`Server error: ${e}`)
